@@ -1,25 +1,32 @@
-# Laravel + Livewire Starter Kit
+# Système de gestion des rôles et permissions
 
-## Introduction
+Ce projet implémente un système de gestion des rôles et permissions sans utiliser Spatie Laravel Permission. Il inclut les fonctionnalités suivantes :
 
-Our Laravel + [Livewire](https://livewire.laravel.com) starter kit provides a robust, modern starting point for building Laravel applications with a Livewire frontend.
+- Un modèle User, Role et Permission avec une relation many-to-many entre eux.
+- Des Contracts et Traits pour gérer dynamiquement les permissions et rôles.
+- Un middleware personnalisé pour vérifier les permissions avant d'accéder à certaines routes.
+- Un panneau d'administration pour gérer les utilisateurs, rôles et permissions.
+- Des Policies Laravel pour sécuriser les actions sensibles sur les ressources.
+- Une interface utilisateur simple avec Bootstrap pour attribuer des rôles et permissions aux utilisateurs.
+- Un système d'authentification basé sur Laravel Breeze ou Jetstream avec un tableau de bord pour les administrateurs et les utilisateurs.
 
-Livewire is a powerful way of building dynamic, reactive, frontend UIs using just PHP. It's a great fit for teams that primarily use Blade templates and are looking for a simpler alternative to JavaScript-driven SPA frameworks like React and Vue.
+## Ajout de nouveaux rôles et permissions
 
-This Livewire starter kit utilizes Livewire 3, Laravel Volt, TypeScript, Tailwind, and the [Flux UI](https://fluxui.dev) component library.
+Pour ajouter de nouveaux rôles et permissions, suivez les étapes suivantes :
 
-## Official Documentation
+1. Créez un nouveau rôle en utilisant le formulaire de création de rôle dans le panneau d'administration. Vous pouvez spécifier le nom, le nom affiché et la description du rôle. Vous pouvez également sélectionner les permissions que vous souhaitez attribuer au rôle.
 
-Documentation for all Laravel starter kits can be found on the [Laravel website](https://laravel.com/docs/starter-kits).
+2. Créez une nouvelle permission en utilisant le formulaire de création de permission dans le panneau d'administration. Vous pouvez spécifier le nom, le nom affiché et la description de la permission.
 
-## Contributing
+3. Attribuez des rôles et permissions à un utilisateur en utilisant le formulaire d'attribution dans le panneau d'administration. Vous pouvez sélectionner les rôles et permissions que vous souhaitez attribuer à l'utilisateur.
 
-Thank you for considering contributing to our starter kit! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Documentation
 
-## Code of Conduct
+Pour plus d'informations sur l'utilisation de ce système de gestion des rôles et permissions, consultez la documentation officielle de Laravel et les ressources suivantes :
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- [Laravel Documentation](https://laravel.com/docs)
+- [Laravel Breeze Documentation](https://laravel.com/docs/breeze)
+- [Laravel Jetstream Documentation](https://laravel.com/docs/jetstream)
+- [Laravel Policies Documentation](https://laravel.com/docs/authorization#policies)
 
-## License
-
-The Laravel + Livewire starter kit is open-sourced software licensed under the MIT license.
+N'hésitez pas à me contacter si vous avez des questions ou besoin d'aide supplémentaire.

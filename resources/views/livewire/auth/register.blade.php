@@ -5,46 +5,29 @@
     <x-auth-session-status class="text-center" :status="session('status')" />
 
     <form wire:submit="register" class="flex flex-col gap-6">
-        <!-- Name -->
-        <flux:input
-            wire:model="name"
-            :label="__('Name')"
-            type="text"
-            required
-            autofocus
-            autocomplete="name"
-            :placeholder="__('Full name')"
-        />
+        <!-- username -->
+        <flux:input wire:model="username" :label="__('username')" type="text" required autofocus autocomplete="username"
+            :placeholder="__('Username')" />
 
         <!-- Email Address -->
-        <flux:input
-            wire:model="email"
-            :label="__('Email address')"
-            type="email"
-            required
-            autocomplete="email"
-            placeholder="email@example.com"
-        />
+        <flux:input wire:model="email" :label="__('Email address')" type="email" required autocomplete="email"
+            placeholder="email@example.com" />
+
+        <!-- firstname -->
+        <flux:input wire:model="firstname" :label="__('first name')" type="text" required autofocus autocomplete="firstname"
+            :placeholder="__('First name')" />
+
+        <!-- username -->
+        <flux:input wire:model="lastname" :label="__('Last name')" type="text" required autofocus autocomplete="lastname"
+            :placeholder="__('Last name')" />
 
         <!-- Password -->
-        <flux:input
-            wire:model="password"
-            :label="__('Password')"
-            type="password"
-            required
-            autocomplete="new-password"
-            :placeholder="__('Password')"
-        />
+        <flux:input wire:model="password" :label="__('Password')" type="password" required autocomplete="new-password"
+            :placeholder="__('Password')" />
 
         <!-- Confirm Password -->
-        <flux:input
-            wire:model="password_confirmation"
-            :label="__('Confirm password')"
-            type="password"
-            required
-            autocomplete="new-password"
-            :placeholder="__('Confirm password')"
-        />
+        <flux:input wire:model="password_confirmation" :label="__('Confirm password')" type="password" required
+            autocomplete="new-password" :placeholder="__('Confirm password')" />
 
         <div class="flex items-center justify-end">
             <flux:button type="submit" variant="primary" class="w-full">

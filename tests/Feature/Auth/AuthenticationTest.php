@@ -23,8 +23,21 @@ class AuthenticationTest extends TestCase
     {
         $user = User::factory()->create();
 
+        // Test with email
         $response = Livewire::test(Login::class)
-            ->set('email', $user->email)
+            ->set('identifier', $user->email)
+            ->set('password', 'password')
+            ->call('login');
+
+        $response
+            ->assertHasNoErrors()
+            ->assertRedirect(route('dashboard', absolute: false));
+
+        $this->assertAuthenticated();
+
+        // Test with username
+        $response = Livewire::test(Login::class)
+            ->set('identifier', $user->username)
             ->set('password', 'password')
             ->call('login');
 

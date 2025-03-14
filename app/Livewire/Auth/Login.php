@@ -15,9 +15,8 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Login extends Component
 {
-    #[Validate('required|string|email')]
-    public string $email = '';
-
+    #[Validate('required|string')]
+    public string $identifier = '';
     #[Validate('required|string')]
     public string $password = '';
 
@@ -32,12 +31,24 @@ class Login extends Component
 
         $this->ensureIsNotRateLimited();
 
-        if (! Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->remember)) {
-            RateLimiter::hit($this->throttleKey());
+        $credentials = [
+            'email' => $this->identifier,
+            'password' => $this->password,
+        ];
 
-            throw ValidationException::withMessages([
-                'email' => __('auth.failed'),
-            ]);
+        if (! Auth::attempt($credentials, $this->remember)) {
+            $credentials = [
+                'username' => $this->identifier,
+                'password' => $this->password,
+            ];
+
+            if (! Auth::attempt($credentials, $this->remember)) {
+                RateLimiter::hit($this->throttleKey());
+
+                throw ValidationException::withMessages([
+                    'identifier' => __('auth.failed'),
+                ]);
+            }
         }
 
         RateLimiter::clear($this->throttleKey());
@@ -60,7 +71,7 @@ class Login extends Component
         $seconds = RateLimiter::availableIn($this->throttleKey());
 
         throw ValidationException::withMessages([
-            'email' => __('auth.throttle', [
+            'identifier' => __('auth.throttle', [
                 'seconds' => $seconds,
                 'minutes' => ceil($seconds / 60),
             ]),
@@ -72,6 +83,6 @@ class Login extends Component
      */
     protected function throttleKey(): string
     {
-        return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+        return Str::transliterate(Str::lower($this->identifier).'|'.request()->ip());
     }
 }

@@ -1,11 +1,8 @@
 <?php
-
 namespace App\Livewire\Auth;
 
 use App\Models\User;
-use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -13,31 +10,43 @@ use Livewire\Component;
 #[Layout('components.layouts.auth')]
 class Register extends Component
 {
-    public string $name = '';
+    public $firstname;
+    public $lastname;
+    public $username;
+    public $email;
+    public $password;
+    public $password_confirmation;
 
-    public string $email = '';
-
-    public string $password = '';
-
-    public string $password_confirmation = '';
-
-    /**
-     * Handle an incoming registration request.
-     */
-    public function register(): void
+    public function render()
     {
-        $validated = $this->validate([
-            'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
-            'password' => ['required', 'string', 'confirmed', Rules\Password::defaults()],
+        return view('livewire.auth.register');
+    }
+
+    public function rules()
+    {
+        return [
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname'  => ['required', 'string', 'max:255'],
+            'username'  => ['required', 'string', 'max:255', 'unique:users'],
+            'email'     => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'password'  => ['required', 'confirmed', Rules\Password::defaults()],
+        ];
+    }
+
+    public function register()
+    {
+        $this->validate();
+
+        $user = User::create([
+            'firstname' => $this->firstname,
+            'lastname'  => $this->lastname,
+            'username'  => $this->username,
+            'email'     => $this->email,
+            'password'  => bcrypt($this->password),
         ]);
-
-        $validated['password'] = Hash::make($validated['password']);
-
-        event(new Registered(($user = User::create($validated))));
 
         Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        return redirect()->route('dashboard');
     }
 }
